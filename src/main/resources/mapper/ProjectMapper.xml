@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xd.mapper.ProjectMapper">
+
+
+    <select id="getProjects" resultType="com.xd.pojo.Project">
+        SELECT
+            d.`id`,
+            d.`name`,
+            d.`type`,
+            d.`salary`,
+            d.`over_salary`,
+            d.address,
+            d.`company`,
+            d.`create_time`,
+            d.`salary_note`,
+            d.`isenable`,
+            m1.`name` AS `manager_name1`,
+            m2.`name` AS `manager_name2`
+        FROM
+            d_project AS d
+                LEFT JOIN d_manager AS m1 ON m1.id = d.m_id1
+                LEFT JOIN d_manager AS m2 ON m2.id = d.m_id2
+        <if test="type != null">
+            WHERE
+            d.`type` = #{type}
+        </if>
+        order by `isenable`
+    </select>
+
+    <select id="getProById" resultType="com.xd.pojo.Project">
+        SELECT
+            p.*,
+            m1.`name` AS `manager_name1`,
+            m2.`name` AS `manager_name2`
+        FROM
+            d_project AS p
+                LEFT JOIN d_manager AS m1 ON p.m_id1 = m1.id
+                LEFT JOIN d_manager AS m2 ON p.m_id2 = m2.id
+
+        where p.id = #{id}
+    </select>
+</mapper>

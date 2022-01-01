@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xd.mapper.EmployeeMapper">
+
+    <update id="updateProject">
+        update `d_employee`
+            set  `pro_id` = #{id}
+              <choose>
+                  <when test="null == iswork">
+                      ,`iswork` = 1
+                  </when>
+                  <otherwise>
+                      ,`iswork` = 0
+                  </otherwise>
+              </choose>
+        where
+            `id`  in (
+            <foreach collection="eIds" item="eid"  separator=",">
+                  #{eid}
+            </foreach>
+            )
+    </update>
+
+
+
+    <select id="getEmployees" resultType="com.xd.pojo.Employee" parameterType="com.xd.pojo.EmployeeRequestInfo">
+        SELECT
+            *
+        FROM
+            `d_employee`
+        WHERE
+            `isdelete` = #{info.isdelete}
+
+            <if test="info != null">
+                <if test="info.iswork != null">
+                    AND `iswork` = #{info.iswork}
+                </if>
+
+                <if test="info.skill != null">
+                    AND `skill` = #{info.skill}
+                </if>
+
+                <if test="info.sex != null">
+                    AND `sex` = #{info.sex}
+                </if>
+
+                <if test="info.nickName != null">
+                    AND `nick_name` LIKE CONCAT('%',#{info.nickName},'%')
+                    OR `name` LIKE CONCAT('%',#{info.nickName},'%')
+                </if>
+
+            </if>
+        ORDER BY
+            <choose>
+                <when test="info.order == 0">
+                    `evl_score` DESC
+                </when>
+                <otherwise>
+                    `evl_score` ASC
+                </otherwise>
+            </choose>
+    </select>
+
+
+</mapper>
