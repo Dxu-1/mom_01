@@ -1,7 +1,7 @@
 package com.xd.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;

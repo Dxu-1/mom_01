@@ -7,11 +7,14 @@ import com.xd.mapper.EmployeeMapper;
 import com.xd.mapper.ProjectMapper;
 import com.xd.pojo.*;
 import com.xd.service.IAttendanceService;
+import com.xd.utils.DateUtil;
+import com.xd.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 *@author xd
@@ -32,6 +35,7 @@ public class AttendanceServiceImpl extends ServiceImpl<AttendanceMapper, Attenda
 
     @Override
     public JsonResult addAtt(Attendance attendance) {
+
         attendance.setId(null);
         Employee employee = employeeMapper.selectById(attendance.getEmpId());
 
@@ -108,5 +112,22 @@ public class AttendanceServiceImpl extends ServiceImpl<AttendanceMapper, Attenda
         List<ProjectMonthAtt> list = attendanceMapper.selectByMonth(proId, localDate);
 
         return JsonResult.selectSuccess(list);
+    }
+
+    @Override
+    public JsonResult removeProjectAtt(Integer id, String date) {
+        if (DateUtil.stringDate(date) instanceof JsonResult){
+            return (JsonResult)DateUtil.stringDate(date);
+        }
+        LocalDate localDate = (LocalDate) DateUtil.stringDate(date);
+
+        List<Attendance> list = attendanceMapper.selectList(new QueryWrapper<Attendance>().eq("pro_id", id).eq("work_date", localDate));
+        int rows = attendanceMapper.deleteBatchIds(list.stream().map(Attendance::getId).collect(Collectors.toList()));
+
+        if (rows != list.size()){
+            return JsonResult.deleteError();
+        }
+
+        return JsonResult.deleteSuccess();
     }
 }

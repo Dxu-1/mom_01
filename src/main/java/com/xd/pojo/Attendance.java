@@ -48,7 +48,7 @@ public class Attendance implements Serializable {
     @TableField("full_day")
     private Integer fullDay;
 
-    private Double overtime;
+    private Integer overtime;
 
     private String note;
 

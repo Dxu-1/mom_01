@@ -1,7 +1,7 @@
 package com.xd.service.impl;
 
 import com.xd.mapper.AttendanceMapper;
-import com.xd.pojo.ProjectMonthAtt;
+import com.xd.pojo.ProjectMonthSalary;
 import com.xd.service.ISalaryService;
 import com.xd.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,8 @@ public class SalaryServiceImpl implements ISalaryService {
     @Override
     public JsonResult getProjectSalaryByMonth(Integer id, LocalDate localDate) {
 
-        List<ProjectMonthAtt> projectMonthAttList = attendanceMapper.selectByMonth(id, localDate);
+        List<ProjectMonthSalary> projectMonthSalaryList = attendanceMapper.selectSalaryByMonth(localDate, id);
 
-        projectMonthAttList.forEach(projectMonthAtt -> {
-            int salary = projectMonthAtt.getSalary()*projectMonthAtt.getAttCount();
-            projectMonthAtt.setSalary(salary);
-        });
-
-        return JsonResult.selectSuccess(projectMonthAttList);
+        return JsonResult.selectSuccess(projectMonthSalaryList);
     }
 }

@@ -1,9 +1,10 @@
 package com.xd.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.xd.pojo.Employee;
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 import com.xd.pojo.Manager;
 import com.xd.pojo.Project;
 import com.xd.service.IEmployeeService;
@@ -11,12 +12,16 @@ import com.xd.service.IManagerService;
 import com.xd.service.IProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.spring.web.json.Json;
-
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 /**
@@ -117,6 +122,52 @@ public class ProjectController {
 
         return employeeService.getProjectEmp(id,currentPage,pageSize);
     }
+
+    @GetMapping("/pro/export")
+    @ApiOperation("excel")
+    public void getProjectEmp(Integer id,String date, HttpServletResponse response){
+        Project project = projectService.getById(id);
+
+        LocalDate localDate = null;
+        try {
+            localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }catch (DateTimeParseException e){
+            try {
+                response.getWriter().write("日期格式不对");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        int month = localDate != null ? localDate.getMonthValue() : 0;
+
+        String  title =localDate.getYear()+"年"+month+"月"+project.getName();
+
+        List<Employee> list = projectService.selectEmpByMonth(localDate,id);
+
+        ExportParams exportParams = new ExportParams(title, "", ExcelType.HSSF);
+        Workbook workbook = ExcelExportUtil.exportExcel(exportParams,Employee.class,list);
+
+        ServletOutputStream outputStream = null;
+
+        try {
+            outputStream = response.getOutputStream();
+            response.setHeader("content-type","application/octet-stream");
+            response.setHeader("content-disposition","attachment;filename="+
+                    URLEncoder.encode(title+".xls","UTF-8"));
+            workbook.write(outputStream);
+            outputStream.flush();
+        } catch (IOException e) {
+            if (null != outputStream){
+                try {
+                    outputStream.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+        }
+    }
+
 
     @ApiOperation("添加员工到项目")
     @PostMapping("/pro/emp")

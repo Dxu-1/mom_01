@@ -2,7 +2,7 @@ package com.xd.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xd.pojo.Admin;
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 
 /**
 *@author xd

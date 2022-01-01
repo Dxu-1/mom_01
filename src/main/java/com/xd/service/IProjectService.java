@@ -1,8 +1,12 @@
 package com.xd.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.xd.pojo.JsonResult;
+import com.xd.pojo.Employee;
+import com.xd.utils.JsonResult;
 import com.xd.pojo.Project;
+
+import java.time.LocalDate;
+import java.util.List;
 
 /**
 *@author xd
@@ -16,4 +20,6 @@ public interface IProjectService extends IService<Project> {
     JsonResult deleteProject(Integer id);
 
     JsonResult getProById(Integer id);
+
+    List<Employee> selectEmpByMonth(LocalDate localDate, Integer id);
 }

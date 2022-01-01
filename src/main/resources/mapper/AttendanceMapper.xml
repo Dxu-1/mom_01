@@ -3,33 +3,48 @@
 <mapper namespace="com.xd.mapper.AttendanceMapper">
 
     <select id="selectByDate" resultType="com.xd.pojo.Attendance">
-        SELECT
-            e.`name` as emp_name,
-            a.*
-        FROM
-            d_attendance AS a
-                LEFT JOIN d_employee AS e ON e.id = a.emp_id
-        WHERE
-            a.pro_id = #{proId}
+        SELECT e.`name` as emp_name,
+               a.*
+        FROM d_attendance AS a
+                 LEFT JOIN d_employee AS e ON e.id = a.emp_id
+        WHERE a.pro_id = #{proId}
           AND a.work_date = #{date}
     </select>
 
     <select id="selectByMonth" resultType="com.xd.pojo.ProjectMonthAtt">
-        SELECT
-               MONTH
-                   ( a.work_date ) AS month,
+        SELECT MONTH
+                   (a.work_date) AS month,
                e.`name`,
-               count( 1 ) AS attCount
-        FROM
-            d_attendance AS a
-        LEFT JOIN d_employee AS e
-            ON e.id = a.emp_id
-        WHERE
-            a.pro_id = #{proId}
-          AND MONTH ( a.work_date ) = month(#{localDate})
-          AND Year ( a.work_date ) = Year(#{localDate})
-        GROUP BY
-            a.emp_id
+               count(1)          AS attCount
+        FROM d_attendance AS a
+                 LEFT JOIN d_employee AS e
+                           ON e.id = a.emp_id
+        WHERE a.pro_id = #{proId}
+          AND MONTH(a.work_date) = month(#{localDate})
+          AND Year(a.work_date) = Year(#{localDate})
+        GROUP BY a.emp_id
+    </select>
+
+    <select id="selectSalaryByMonth" resultType="com.xd.pojo.ProjectMonthSalary">
+        SELECT MONTH
+                   (a.work_date) AS                             month,
+               e.`name`,
+               count(1)          AS                             attCount,
+               sum(a.overtime)   AS                             overtime,
+               a.salary_note,
+               a.full_day,
+               AVG(salary)       AS                             salary,
+               AVG(over_salary)  AS                             over_salary,
+               SUM(IF(full_day = '1', salary, salary / 2))      sum_salary,
+               SUM(IF(overtime = 0, 0, over_salary * overtime)) sum_over_salary
+        FROM d_attendance AS a
+                 LEFT JOIN d_employee AS e ON e.id = a.emp_id
+        WHERE a.pro_id = #{proId}
+          AND MONTH(a.work_date) = month(#{localDate})
+          AND YEAR(a.work_date) = YEAR(#{localDate})
+
+        GROUP BY a.emp_id
+
     </select>
 
 </mapper>

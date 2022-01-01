@@ -1,5 +1,6 @@
 package com.xd.pojo;
 
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,6 @@ public class ProjectMonthAtt implements Serializable {
 
     private String month;
     private String name;
-    private String attCount;
+    private Integer attCount;
 
 }

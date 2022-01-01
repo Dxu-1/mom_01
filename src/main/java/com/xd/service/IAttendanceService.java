@@ -1,9 +1,8 @@
 package com.xd.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.xd.mapper.AttendanceMapper;
 import com.xd.pojo.Attendance;
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 
 import java.time.LocalDate;
 
@@ -21,4 +20,6 @@ public interface IAttendanceService extends IService<Attendance> {
     JsonResult updateAtt(Attendance attendance);
 
     JsonResult getProjectAttByMonth(Integer proId, LocalDate localDate);
+
+    JsonResult removeProjectAtt(Integer id, String date);
 }

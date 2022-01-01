@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.config.security.JwtUtil;
 import com.xd.mapper.AdminMapper;
 import com.xd.pojo.Admin;
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 import com.xd.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

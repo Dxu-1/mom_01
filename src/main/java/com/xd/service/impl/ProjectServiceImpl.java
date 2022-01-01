@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mapper.EmployeeMapper;
 import com.xd.mapper.ProjectMapper;
 import com.xd.pojo.Employee;
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 import com.xd.pojo.Project;
 import com.xd.service.IProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +69,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     public JsonResult getProById(Integer id) {
         Project project = projectMapper.getProById(id);
         return JsonResult.selectSuccess(project);
+    }
+
+    @Override
+    public List<Employee> selectEmpByMonth(LocalDate localDate, Integer id) {
+        return employeeMapper.selectProjectEmpByMonth(localDate,id);
     }
 
 }

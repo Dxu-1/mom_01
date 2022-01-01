@@ -1,4 +1,4 @@
-package com.xd.pojo;
+package com.xd.utils;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

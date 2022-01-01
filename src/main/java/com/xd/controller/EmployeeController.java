@@ -1,9 +1,8 @@
 package com.xd.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xd.pojo.Employee;
 import com.xd.pojo.EmployeeRequestInfo;
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 import com.xd.service.IEmployeeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -84,6 +83,8 @@ public class EmployeeController {
     public JsonResult delete(Integer id){
         Employee employee = new Employee();
         employee.setIsdelete(1);
+        employee.setProId(null);
+        employee.setIswork(0);
         employee.setId(id);
         if (employeeService.updateById(employee)){
             return JsonResult.deleteSuccess();

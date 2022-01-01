@@ -2,7 +2,7 @@ package com.xd.controller;
 
 
 import com.xd.pojo.Admin;
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 import com.xd.service.IAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

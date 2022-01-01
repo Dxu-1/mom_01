@@ -8,7 +8,7 @@ import com.xd.mapper.EmployeeMapper;
 import com.xd.mapper.ProjectMapper;
 import com.xd.pojo.Employee;
 import com.xd.pojo.EmployeeRequestInfo;
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 import com.xd.pojo.Project;
 import com.xd.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,5 +141,10 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             return JsonResult.deleteSuccess();
         }
         return JsonResult.deleteError();
+    }
+
+    @Override
+    public List<Integer> getEmpIds(Integer id) {
+        return employeeMapper.getEmpIds(id);
     }
 }

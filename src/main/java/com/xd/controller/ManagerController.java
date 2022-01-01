@@ -1,6 +1,6 @@
 package com.xd.controller;
 
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 import com.xd.pojo.Manager;
 import com.xd.service.IManagerService;
 import io.swagger.annotations.Api;

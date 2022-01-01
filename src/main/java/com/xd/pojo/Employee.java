@@ -1,5 +1,6 @@
 package com.xd.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -26,6 +27,7 @@ public class Employee implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
+    @Excel(name = "姓名",width = 15)
     private String name;
 
     private Integer sex;
@@ -44,6 +46,7 @@ public class Employee implements Serializable {
     private Integer proId;
 
     @TableField("id_card")
+    @Excel(name = "身份证号",width = 30)
     private String idCard;
 
     @TableField("evl_score")
@@ -52,6 +55,7 @@ public class Employee implements Serializable {
     @TableField("evl_content")
     private String evlContent;
 
+    @Excel(name = "手机号",width = 20)
     private String phone;
 
     private String wechat;
@@ -59,6 +63,7 @@ public class Employee implements Serializable {
     private String hometown;
 
     @TableField("bank_num")
+    @Excel(name = "银行卡号",width = 30)
     private String bankNum;
 
     @TableField("other_bank")
@@ -74,7 +79,9 @@ public class Employee implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private LocalDate updateTime;
 
-
     private Integer isdelete;
 
+    @TableField(exist = false)
+    @Excel(name = "天数",width = 15)
+    private Integer attCount;
 }

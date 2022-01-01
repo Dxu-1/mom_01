@@ -3,7 +3,7 @@ package com.xd.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xd.pojo.Employee;
 import com.xd.pojo.EmployeeRequestInfo;
-import com.xd.pojo.JsonResult;
+import com.xd.utils.JsonResult;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -26,4 +26,6 @@ public interface IEmployeeService extends IService<Employee> {
     JsonResult updateProjectByIds(@Param("id") Integer id, @Param("eIds") Integer[] eIds);
 
     JsonResult updateProjectByIds(@Param("id") Integer id, @Param("eIds") Integer[] eIds, @Param("iswork") Integer iswork);
+
+    List<Integer> getEmpIds(Integer id);
 }
