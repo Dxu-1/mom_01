@@ -19,4 +19,6 @@ public interface IAttendanceService extends IService<Attendance> {
     JsonResult getProjectAttByDate(Integer proId, LocalDate date);
 
     JsonResult updateAtt(Attendance attendance);
+
+    JsonResult getProjectAttByMonth(Integer proId, LocalDate localDate);
 }

@@ -61,4 +61,7 @@ public class Attendance implements Serializable {
     @TableField("update_time")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
     private LocalDate updateTime;
+
+    @TableField(exist = false)
+    private String empName;
 }

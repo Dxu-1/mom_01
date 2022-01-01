@@ -1,4 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xd.mapper.AttendanceMapper">
+
+    <select id="selectByDate" resultType="com.xd.pojo.Attendance">
+        SELECT
+            e.`name` as emp_name,
+            a.*
+        FROM
+            d_attendance AS a
+                LEFT JOIN d_employee AS e ON e.id = a.emp_id
+        WHERE
+            a.pro_id = #{proId}
+          AND a.work_date = #{date}
+    </select>
+
+    <select id="selectByMonth" resultType="com.xd.pojo.ProjectMonthAtt">
+        SELECT
+               MONTH
+                   ( a.work_date ) AS month,
+               e.`name`,
+               count( 1 ) AS attCount
+        FROM
+            d_attendance AS a
+        LEFT JOIN d_employee AS e
+            ON e.id = a.emp_id
+        WHERE
+            a.pro_id = #{proId}
+          AND MONTH ( a.work_date ) = month(#{localDate})
+          AND Year ( a.work_date ) = Year(#{localDate})
+        GROUP BY
+            a.emp_id
+    </select>
+
 </mapper>

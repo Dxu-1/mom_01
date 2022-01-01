@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mapper.AttendanceMapper;
 import com.xd.mapper.EmployeeMapper;
 import com.xd.mapper.ProjectMapper;
-import com.xd.pojo.Attendance;
-import com.xd.pojo.Employee;
-import com.xd.pojo.JsonResult;
-import com.xd.pojo.Project;
+import com.xd.pojo.*;
 import com.xd.service.IAttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,11 +74,8 @@ public class AttendanceServiceImpl extends ServiceImpl<AttendanceMapper, Attenda
 
     @Override
     public JsonResult getProjectAttByDate(Integer proId, LocalDate date) {
+        List<Attendance> attendances = attendanceMapper.selectByDate(proId,date);
 
-
-
-        List<Attendance> attendances = attendanceMapper.selectList(new QueryWrapper<Attendance>()
-                .eq("pro_id", proId).eq("work_date", date));
         if (attendances.size() == 0){
             return JsonResult.success(date+"没有考勤记录");
         }
@@ -106,5 +100,13 @@ public class AttendanceServiceImpl extends ServiceImpl<AttendanceMapper, Attenda
             return JsonResult.updateSuccess();
         }
         return JsonResult.updateError();
+    }
+
+    @Override
+    public JsonResult getProjectAttByMonth(Integer proId, LocalDate localDate) {
+
+        List<ProjectMonthAtt> list = attendanceMapper.selectByMonth(proId, localDate);
+
+        return JsonResult.selectSuccess(list);
     }
 }

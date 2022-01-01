@@ -49,10 +49,10 @@ public class AttendanceController {
     }
 
 
-    @ApiOperation("根据项目以及日期查询")
+@ApiOperation("根据项目日期查询")
     @GetMapping("/att")
     public JsonResult getAttByProjectDate(@RequestParam(required = false)String  date ,@RequestParam Integer proId){
-        LocalDate localDate = null;
+        LocalDate localDate;
         if (date == null){
             localDate = LocalDate.now();
         }else{
@@ -64,5 +64,23 @@ public class AttendanceController {
         }
         return attendanceService.getProjectAttByDate(proId,localDate);
     }
+
+    @ApiOperation("根据项目月份查询")
+    @GetMapping("/att/month")
+    public JsonResult getAttByProjectMonth(@RequestParam(required = false)String  date ,@RequestParam Integer proId){
+        LocalDate localDate;
+        if (date == null){
+            localDate = LocalDate.now();
+        }else{
+            try {
+                localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }catch (DateTimeParseException e){
+                return JsonResult.error("时间格式不对");
+            }
+        }
+        return attendanceService.getProjectAttByMonth(proId,localDate);
+    }
+
+
 
 }
