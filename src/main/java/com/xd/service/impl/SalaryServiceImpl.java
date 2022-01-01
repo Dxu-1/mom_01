@@ -26,6 +26,10 @@ public class SalaryServiceImpl implements ISalaryService {
 
         List<ProjectMonthSalary> projectMonthSalaryList = attendanceMapper.selectSalaryByMonth(localDate, id);
 
+        for (ProjectMonthSalary projectMonthSalary : projectMonthSalaryList) {
+            System.out.println(projectMonthSalary);
+        }
+
         return JsonResult.selectSuccess(projectMonthSalaryList);
     }
 }

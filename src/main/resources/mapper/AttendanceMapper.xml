@@ -42,9 +42,8 @@
         WHERE a.pro_id = #{proId}
           AND MONTH(a.work_date) = month(#{localDate})
           AND YEAR(a.work_date) = YEAR(#{localDate})
-
         GROUP BY a.emp_id
-
+        order by sum_salary desc
     </select>
 
 </mapper>
