@@ -44,8 +44,8 @@
             </if>
 
             <if test="info.nickName != null">
-                AND `nick_name` LIKE CONCAT('%',#{info.nickName},'%')
-                OR `name` LIKE CONCAT('%',#{info.nickName},'%')
+                AND (`nick_name` LIKE CONCAT('%',#{info.nickName},'%')
+                OR `name` LIKE CONCAT('%',#{info.nickName},'%'))
             </if>
 
         </if>
