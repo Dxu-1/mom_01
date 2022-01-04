@@ -68,7 +68,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             info = new EmployeeRequestInfo();
             info.setIsdelete(0);
             info.setCurrentPage(1);
-            info.setPageSize(10);
+            info.setPageSize(5);
             info.setOrder(0);
         }else{
             if (info.getIsdelete() == null){
@@ -76,12 +76,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             }
             if (info.getCurrentPage() == null){
                 info.setCurrentPage(1);
-                info.setPageSize(10);
             }
             if (info.getOrder() == null){
                 info.setOrder(0);
             }
         }
+        info.setPageSize(6);
 
         Page<Employee> page = new Page<>(info.getCurrentPage(),
                                         info.getPageSize());

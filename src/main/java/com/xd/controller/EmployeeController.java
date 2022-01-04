@@ -1,5 +1,6 @@
 package com.xd.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xd.pojo.Employee;
 import com.xd.pojo.EmployeeRequestInfo;
 import com.xd.utils.JsonResult;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 /**
@@ -34,7 +36,6 @@ public class EmployeeController {
     @GetMapping("/emp")
     @ApiOperation("获取所有员工")
     public JsonResult getEmp(EmployeeRequestInfo info){
-
         return employeeService.getEmployees(info);
     }
 
@@ -86,10 +87,25 @@ public class EmployeeController {
         employee.setProId(null);
         employee.setIswork(0);
         employee.setId(id);
+        System.out.println(id);
+
         if (employeeService.updateById(employee)){
             return JsonResult.deleteSuccess();
         }
         return JsonResult.deleteError();
+    }
+
+    @GetMapping("/emp/{id}")
+    @ApiOperation("获取单个员工的所有信息")
+    public JsonResult getSingleEmp(@PathVariable("id") Integer id){
+        if (null == id){
+            return JsonResult.error("id不正确");
+        }
+        List<Employee> emp = employeeService.list(new QueryWrapper<Employee>().eq("id", id));
+        if ( null == emp){
+            return JsonResult.error("没有这个员工");
+        }
+        return JsonResult.selectSuccess(emp);
     }
 
 }

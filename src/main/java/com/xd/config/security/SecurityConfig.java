@@ -2,6 +2,7 @@ package com.xd.config.security;
 
 import com.xd.pojo.Admin;
 import com.xd.service.IAdminService;
+import com.xd.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,8 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/doc.html",                    // 放行 swagger 资源
                 "/webjars/**",                  // 放行 swagger 资源
                 "/swagger-resources/**",        // 放行 swagger 资源
-                "/v2/api-docs/**",              // 放行 swagger 资源
-                "/api/pro/**"
+                "/v2/api-docs/**"               // 放行 swagger 资源
         );
     }
 

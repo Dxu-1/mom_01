@@ -25,4 +25,13 @@ public class EmployeeRequestInfo implements Serializable {
     private Integer currentPage;
     private Integer pageSize;
     private Integer order;
+
+    public EmployeeRequestInfo(Integer sex, String nickName, Integer skill, Integer iswork, Integer isdelete, Integer currentPage) {
+        this.sex = sex;
+        this.nickName = nickName;
+        this.skill = skill;
+        this.iswork = iswork;
+        this.isdelete = isdelete;
+        this.currentPage = currentPage;
+    }
 }
