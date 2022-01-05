@@ -102,7 +102,7 @@ public class EmployeeController {
             return JsonResult.error("id不正确");
         }
         List<Employee> emp = employeeService.list(new QueryWrapper<Employee>().eq("id", id));
-        if ( null == emp){
+        if ( 0 == emp.size()){
             return JsonResult.error("没有这个员工");
         }
         return JsonResult.selectSuccess(emp);
